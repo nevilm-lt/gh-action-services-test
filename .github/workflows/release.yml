@@ -40,14 +40,14 @@ jobs:
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.0
         with:
-          github_token: ${{ secrets.GH_API_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: ${{ env.RELEASE_TYPE }}
 
       - if: startsWith(matrix.label, 'release:')
         name: Creating Github Release
         uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GH_API_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
           generateReleaseNotes: true
           prerelease: false

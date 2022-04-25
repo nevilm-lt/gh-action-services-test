@@ -23,10 +23,6 @@ jobs:
       actions: write
 
     steps:
-    
-      - uses: actions/labeler@v4
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - if: startsWith(matrix.label, 'release:')
         name: Retrieving Release Type

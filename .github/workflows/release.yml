@@ -39,14 +39,14 @@ jobs:
         name: Testing CLI
         run: gh repo list
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - if: startsWith(matrix.label, 'release:')
         name: Bump version and push tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.0
         with:
-          github_token: ${{ secrets.GH_API_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           default_bump: ${{ env.RELEASE_TYPE }}
 
 
@@ -54,7 +54,7 @@ jobs:
         name: Creating Github Release
         uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GH_API_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
           generateReleaseNotes: true
           prerelease: false

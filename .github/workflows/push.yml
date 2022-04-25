@@ -48,7 +48,10 @@ jobs:
 
       - name: Testing Release Type
         run: |
-          echo "---> ${{ env.RELEASE_TYPE }}"
+          if [ ${{ env.RELEASE_TYPE }} == "true" ] ; then
+            exit 1
+          fi
+          echo "Releasing: ${{ env.RELEASE_TYPE }}"
 
       - name: Bump version and push tag
         id: tag_version

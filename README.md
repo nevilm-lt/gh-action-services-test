@@ -37,3 +37,5 @@ TEST
 major release
 
 fork test
+
+Linting check

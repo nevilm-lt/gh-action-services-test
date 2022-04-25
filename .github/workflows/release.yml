@@ -1,0 +1,54 @@
+name: Release on Dev
+
+on:
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
+
+jobs:
+
+  Release:
+
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        label: ${{ github.event.pull_request.labels.*.name }}
+
+    steps:
+
+      - if: startsWith(matrix.label, 'release:')
+        name: Retrieving Release Type
+        run: |
+          release_type=`echo ${{matrix.label}} | awk -F':' '{print $NF}'`
+          echo "RELEASE_TYPE=${release_type}" >> $GITHUB_ENV
+          echo "Releasing: ${release_type}"
+      - if: startsWith(matrix.label, 'release:')
+        name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+
+      - if: startsWith(matrix.label, 'release:')
+        name: Checkout
+        uses: actions/checkout@v2.4.0
+
+      - if: startsWith(matrix.label, 'release:')
+        name: Bump version and push tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: ${{ env.RELEASE_TYPE }}
+
+      - if: startsWith(matrix.label, 'release:')
+        name: Creating Github Release
+        uses: ncipollo/release-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          draft: false
+          generateReleaseNotes: true
+          prerelease: false
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.changelog.outputs.changelog }}

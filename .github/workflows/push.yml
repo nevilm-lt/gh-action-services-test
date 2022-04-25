@@ -9,15 +9,11 @@ jobs:
     name: A job to check the PR labels contain given labels
     steps:
 
-      - name: Check PR labels action step
-        id: check_pr_labels
-        uses: shioyang/check-pr-labels-on-push-action@v1.0.3
+      - uses: danielchabr/pr-labels-checker@v3
+        id: checkLabel
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          labels: '["release:patch", "release:major", "release:minor"]'
-
-      - name: See result
-        run: echo "${{ steps.check_pr_labels.outputs.result }}"
+          hasSome: release:patch,release:major,release:minor
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Bump version and push tag
         id: tag_version

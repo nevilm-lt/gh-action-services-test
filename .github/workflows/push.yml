@@ -10,7 +10,7 @@ jobs:
     name: A job to check the PR labels contain given labels
     steps:
 
-      - uses: danielchabr/pr-labels-checker@3.0
+      - uses: danielchabr/pr-labels-checker@master
         id: checkLabel
         with:
           hasSome: release:patch,release:major,release:minor

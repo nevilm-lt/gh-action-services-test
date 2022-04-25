@@ -39,7 +39,7 @@ jobs:
         name: Testing CLI
         run: gh repo list
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_API_TOKEN }}
 
       - if: startsWith(matrix.label, 'release:')
         name: Bump version and push tag

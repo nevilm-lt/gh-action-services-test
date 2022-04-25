@@ -47,11 +47,11 @@ jobs:
           MAJOR: ${{ steps.check_pr_labels_major.outputs.result }}
 
       - name: Testing Release Type
-        run: |
-          if [ ${{ env.RELEASE_TYPE }} == "true" ] ; then
-            exit 1
-          fi
-          echo "Releasing: ${{ env.RELEASE_TYPE }}"
+        if: ${{ env.RELEASE_TYPE }} == "none"
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('Release labels were not present in the PR!')
 
       - name: Bump version and push tag
         id: tag_version

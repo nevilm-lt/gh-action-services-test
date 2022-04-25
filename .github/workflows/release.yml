@@ -16,6 +16,8 @@ jobs:
     strategy:
       matrix:
         label: ${{ github.event.pull_request.labels.*.name }}
+    permissions:
+      contents: write
 
     steps:
 

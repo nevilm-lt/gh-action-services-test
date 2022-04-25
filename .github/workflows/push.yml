@@ -14,7 +14,7 @@ jobs:
         uses: shioyang/check-pr-labels-on-push-action@v1.0.3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          labels: '["release:patch"]'
+          labels: '["release:patch", "release:major", "release:minor"]'
 
       - name: See result
         run: echo "${{ steps.check_pr_labels.outputs.result }}"

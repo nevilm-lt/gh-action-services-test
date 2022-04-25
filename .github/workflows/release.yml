@@ -6,7 +6,6 @@ on:
       - closed
     branches:
       - mainn
-
 jobs:
 
   Release:
